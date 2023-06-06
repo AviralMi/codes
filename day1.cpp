@@ -1,3 +1,4 @@
+//pointers
 #include <stdio.h>
 #Include <stdllb.h>
 void update(int *a, int *b){
