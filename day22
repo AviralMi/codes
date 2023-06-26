@@ -1,0 +1,11 @@
+class Solution {
+public:
+    bool divideArray(vector<int>& nums) {
+        vector<int> c(501);
+        for (int& v : nums) ++c[v];
+        for (int& v : c)
+            if (v % 2)
+                return false;
+        return true;
+    }
+};
