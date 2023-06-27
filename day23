@@ -1,0 +1,17 @@
+class Solution {
+public:
+    vector<int> intersection(vector<vector<int>>& nums) {
+    vector<int> a;
+    vector<int> count(1001);
+
+    for (const vector<int>& A : nums)
+      for (const int i : A)
+        ++count[i];
+
+    for (int j = 1; j < 1001; ++j)
+      if (count[j] == nums.size())
+        a.push_back(j);
+
+    return a;
+    }
+};
