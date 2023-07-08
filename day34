@@ -1,0 +1,13 @@
+class Solution {
+public:
+    string makeGood(string s) {
+        string a;
+        for (char c : s) {      
+        if (a.length() && abs(a.back() - c) == abs('a' - 'A'))
+            a.pop_back();        
+        else
+            a.push_back(c);
+        }
+        return a;  
+    }
+};
