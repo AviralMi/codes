@@ -1,0 +1,19 @@
+class Solution {
+public:
+    double calculateTax(vector<vector<int>>& brackets, int income) {
+        double a=0;  
+        if(income==0){
+            return a;
+        }
+        int prev=0; 
+        for(int i=0;i<brackets.size();i++){
+            int asli=min(brackets[i][0],income);
+            a+=((asli-prev)*brackets[i][1]*1.0)/100.0;
+            if(brackets[i][0]>=income){
+                break;
+            }
+            prev=brackets[i][0];
+        }
+        return a;
+    }
+};
