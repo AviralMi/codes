@@ -1,0 +1,16 @@
+class Solution {
+public:
+    long long countQuadruplets(vector<int>& nums) {
+        long long ans = 0;
+        vector<int> dp(nums.size());
+        for (int k = 2; k < nums.size(); ++k)
+            for (int j = 0, numLessThanK = 0; j < k; ++j)
+                if (nums[j] < nums[k]) {
+                    ++numLessThanK; 
+                    ans += dp[j];   
+                } else if (nums[j] > nums[k]) {
+                    dp[j] += numLessThanK;
+                }
+        return ans;
+    }
+};
