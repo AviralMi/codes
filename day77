@@ -1,0 +1,62 @@
+class Solution 
+{
+    
+public:
+    
+    vector<string>v;
+    vector<vector<int>>finall;
+    
+     void getpath(TreeNode* root,string s,int targetSum)
+    {
+        if((root->left==NULL)&&(root->right==NULL))
+        {
+            s+=to_string(root->val);
+            v.push_back(s);
+        
+            stringstream ss(s);
+            string word;
+            vector<int>temp;
+            int sum=0;
+            
+            while(ss>>word)
+            {
+                sum+=stoi(word);
+                temp.push_back(stoi(word));
+            }
+            
+            if(sum==targetSum)
+            {
+                finall.push_back(temp);
+            }
+            
+            temp.clear();
+            return;
+        }
+        
+        
+        s+=to_string(root->val);
+        s+=" ";
+        
+        
+        if(root->left)
+        {
+            getpath(root->left,s,targetSum);
+        }
+        
+        if(root->right)
+        {
+            getpath(root->right,s,targetSum);
+        }  
+    }
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) 
+    {
+        if(root==NULL)
+      {
+          return {};
+      }
+      string s;
+      s="";
+      getpath(root,s,targetSum);
+      return finall;
+    }
+};
