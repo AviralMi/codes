@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int specialArray(vector<int>& nums) {
+        int n= nums.size();
+        sort(nums.begin(),nums.end());
+        int x,lb,ans=-1;
+        for(x=0;x<=nums.size();x++)
+        {
+            int lb=lower_bound(nums.begin(),nums.end(),x)-nums.begin();
+            if(nums.size()-lb==x){
+               ans= x;
+               break;
+            }
+            
+            else 
+            ans= -1;
+           
+
+        }
+        return ans;
+    }
+};
