@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int divisorSubstrings(int num, int k) {
+        int front = 0;
+        int back = 0;
+        string str = to_string(num);
+        int count = 0;
+
+        while(front < str.size()){
+            if(front-back+1 == k){
+                string temp = str.substr(back, k);
+                int no = stoi(temp);
+                if(no!=0 && num%no==0){
+                    count++;
+                }
+                front++;
+                back++;
+                continue;
+            }
+            front++;
+        }
+        
+        return count;
+    }
+};
