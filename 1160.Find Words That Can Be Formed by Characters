@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int countCharacters(vector<string>& words, string chars) {
+        unordered_map<char, int> m;
+        for (char c : chars)
+            m[c]++;
+        int ans = 0;
+        for (string s : words){
+            bool is_spell = true;
+            unordered_map<char, int> tmp;
+            for (char c : s)
+                tmp[c]++;
+            for (char c : s){
+                if (m[c] < tmp[c]){
+                    is_spell = false;
+                    break;
+                }
+            }
+            if (is_spell)
+                ans += s.size();
+        }
+        return ans;
+    }
+};
