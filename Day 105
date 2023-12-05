@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int numberOfMatches(int n) {
+     int round=0;
+    int sum=0;
+    while(round!=1)
+    {
+        if(n%2==0)
+        {
+            round=n/2;
+        }
+        else if(n%2!=0)
+        {
+            round=(n/2)+1;
+        }
+        sum=sum+(n/2);
+        n=round;
+    }
+    return sum;   
+    }
+};
