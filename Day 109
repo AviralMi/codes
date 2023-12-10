@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<vector<int>> transpose(vector<vector<int>>& originalMatrix) {
+         int rowCount = originalMatrix.size();      // Number of rows in the matrix
+        int columnCount = originalMatrix[0].size(); // Number of columns in the matrix
+      
+        // Create a new matrix with dimensions swapped (columns x rows)
+        vector<vector<int>> transposedMatrix(columnCount, vector<int>(rowCount));
+      
+        // Iterate over each element in the new matrix
+        for (int i = 0; i < columnCount; ++i) {
+            for (int j = 0; j < rowCount; ++j) {
+                // Assign the value from the original matrix to the new position 
+                // in the transposed matrix by swapping indices
+                transposedMatrix[i][j] = originalMatrix[j][i];
+            }
+        }
+        return transposedMatrix;
+    }
+};
