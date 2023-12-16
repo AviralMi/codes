@@ -1,0 +1,12 @@
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if (s.length() != t.length())
+            return false;
+        vector<char> sArr(s.begin(), s.end());
+        vector<char> tArr(t.begin(), t.end());
+        sort(sArr.begin(), sArr.end());
+        sort(tArr.begin(), tArr.end());
+        return sArr == tArr;
+    }
+};
