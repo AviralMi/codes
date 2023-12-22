@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int maxScore(string s) {
+        int zeros = 0, ones = 0, ans = INT_MIN;
+        int n = s.size();
+        for(int i = 0; i < n; i++){
+            if(s[i] == '0') zeros++;
+            else ones++;
+            if(i != n-1) ans = max(ans, zeros-ones);
+        }
+        return ans + ones;
+    }
+};
