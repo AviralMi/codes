@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int numDecodings(string s) {
+        int prevCount = 1;
+        int prevPrevCount = 1;
+        for (int i = 0; i < s.size(); ++i)
+        {
+            int count = 0;
+            if (s[i] >= '1')
+                count += prevCount;
+            if (i > 0 && (s[i-1] == '1' || s[i-1] == '2' && s[i] <= '6'))
+                count += prevPrevCount;
+            prevPrevCount = prevCount;
+            prevCount = count;            
+        }
+        return prevCount;
+    }
+};
