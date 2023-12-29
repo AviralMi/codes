@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int minDifficulty(vector<int>& jobDifficulty, int d) {
+        int numJobs = jobDifficulty.size();
+      
+        // Create array to store the minimum difficulty on day j having completed job i
+        int minDiff[numJobs + 1][d + 1];
+      
+        // Initialize the array with high initial values, except for start state
+        memset(minDiff, 0x3f, sizeof(minDiff));
+        minDiff[0][0] = 0;
+
+        // Iterate through all jobs
+        for (int i = 1; i <= numJobs; ++i) {
+            // For each job, iterate through all possible days, but never more than i days
+            for (int day = 1; day <= min(d, i); ++day) {
+                int maxDifficulty = 0;
+
+                // Looking for the last job on the previous day to minimize today's difficulty
+                for (int k = i; k; --k) {
+                    // Update the max difficulty for today's job set (k-1 to i)
+                    maxDifficulty = max(maxDifficulty, jobDifficulty[k - 1]);
+
+                    // Recurrence relation: 
+                    // minDiff for job i on day 'day' is the minimum of its current value or
+                    // the sum of max difficulty encountered today and
+                    // the best we could have done through job k-1 on day 'day-1'
+                    minDiff[i][day] = min(minDiff[i][day], minDiff[k - 1][day - 1] + maxDifficulty);
+                }
+            }
+        }
+
+        // Check if it's possible to schedule jobs within d days. If not, return -1
+        return minDiff[numJobs][d] == 0x3f3f3f3f ? -1 : minDiff[numJobs][d];
+    }
+};
