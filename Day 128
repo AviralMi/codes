@@ -1,0 +1,30 @@
+class Solution {
+public:
+    // Method to check if the characters of the given words can be rearranged 
+    // to make all the words equal
+    bool makeEqual(vector<string>& words) {
+        // Initialize a counter vector to count the occurrences of each letter
+        vector<int> letterCounter(26, 0);
+
+        // Loop over each word in the vector
+        for (const string& word : words) {
+            // Count the occurrences of each character in the word
+            for (char c : word) {
+                ++letterCounter[c - 'a']; // Increment the count for the character
+            }
+        }
+
+        int numWords = words.size(); // Store the total number of words
+      
+        // Loop over the counter and check if each character's total count
+        // is divisible by the number of words, otherwise return false
+        for (int count : letterCounter) {
+            if (count % numWords != 0) {
+                return false; // If not divisible, we can't make all words equal
+            }
+        }
+      
+        // If all counts are divisible, return true
+        return true;
+    }
+};
