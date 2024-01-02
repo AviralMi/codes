@@ -1,0 +1,34 @@
+#include <vector>
+
+class Solution {
+public:
+    // Function that rearranges numbers into a sorted matrix based on their frequency
+    std::vector<std::vector<int>> findMatrix(std::vector<int>& nums) {
+        std::vector<std::vector<int>> matrix; // Will hold the final sorted matrix
+        int n = nums.size();
+        std::vector<int> count(n + 1, 0); // Initialize counting vector with zeros
+
+        // Count how many times each number appears in the input vector
+        for (int num : nums) {
+            ++count[num];
+        }
+
+        // Iterate through each unique number in the input array
+        for (int num = 1; num <= n; ++num) {
+            int frequency = count[num]; // Get the frequency of the current number
+
+            // Construct rows of the matrix based on the frequency of the current number
+            for (int j = 0; j < frequency; ++j) {
+                // If there are not enough rows in the matrix, add a new row
+                if (matrix.size() <= j) {
+                    matrix.push_back(std::vector<int>());
+                }
+                // Add the current number to the j-th row
+                matrix[j].push_back(num);
+            }
+        }
+      
+        // Return the organized matrix
+        return matrix;
+    }
+};
