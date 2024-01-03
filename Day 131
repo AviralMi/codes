@@ -1,0 +1,25 @@
+class Solution {
+public:
+    // Function to calculate the number of laser beams that can be formed in the security bank.
+    int numberOfBeams(vector<string>& bank) {
+        int totalBeams = 0;     // This variable will store the total number of beams.
+        int previousDevices = 0; // This will hold the count of devices (ones) in the previous row.
+      
+        // Iterate over each row in the 'bank' grid.
+        for (auto& row : bank) {
+            int currentDevices = 0; // Count the number of devices (ones) in the current row.
+            // Iterate through each character in the row to count the devices.
+            for (char& device : row) {
+                if (device == '1') { // If the current character is '1', increment the counter.
+                    ++currentDevices;
+                }
+            }
+            // If there are devices in the current row, calculate the beams between this and the previous row with devices.
+            if (currentDevices > 0) {
+                totalBeams += previousDevices * currentDevices; // Beams are formed between the rows.
+                previousDevices = currentDevices; // Update the previousDevices count for the next iteration.
+            }
+        }
+        return totalBeams; // Return the total number of beams formed.
+    }
+};
