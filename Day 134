@@ -1,0 +1,40 @@
+class Solution {
+public:
+    // Function to maximize profit by scheduling jobs such that no two jobs overlap
+    int jobScheduling(vector<int>& startTimes, vector<int>& endTimes, vector<int>& profits) {
+        int numJobs = profits.size(); // Number of jobs
+
+        // Vector of tuples to store each job's information (end time, start time, profit)
+        vector<tuple<int, int, int>> jobs(numJobs);
+      
+        // Populate the vector with job information
+        for (int i = 0; i < numJobs; ++i) {
+            jobs[i] = {endTimes[i], startTimes[i], profits[i]};
+        }
+      
+        // Sort the jobs based on their end times; this will also sort start times and profits correspondingly
+        sort(jobs.begin(), jobs.end());
+      
+        // Create a DP vector to store the maximum profit up to the i-th job
+        vector<int> dp(numJobs + 1);
+      
+        // Iterate over the jobs
+        for (int i = 0; i < numJobs; ++i) {
+            // Destructure tuple to get current job's start time and profit
+            auto [endTime, startTime, profit] = jobs[i];
+          
+            // Find the latest job that does not conflict with the current job i.e., job that ends before the start of the current job
+            int latestNonConflictJobIndex = upper_bound(jobs.begin(), jobs.begin() + i, startTime, [&](int time, const auto& job) -> bool {
+                return time < get<0>(job);
+            }) - jobs.begin();
+          
+            // Update the DP table by choosing the maximum profit between
+            // - profit from the previous job (excluding the current job)
+            // - profit from the current job plus the latest non-conflicting job
+            dp[i + 1] = max(dp[i], dp[latestNonConflictJobIndex] + profit);
+        }
+      
+        // The last element in the DP array will contain the maximum profit that can be achieved.
+        return dp[numJobs];
+    }
+};
