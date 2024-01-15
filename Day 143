@@ -1,0 +1,41 @@
+class Solution {
+public:
+    // Function to find the players who have never lost a match (winners) 
+    // and those who have lost exactly one match (one-match-losers)
+    vector<vector<int>> findWinners(vector<vector<int>>& matches) {
+        unordered_map<int, int> lossCount; // Map storing the loss count for each player
+
+        // Process each match result and update the loss count for the players
+        for (auto& match : matches) {
+            int winner = match[0];
+            int loser = match[1];
+          
+            // Make sure every player is included in the map
+            if (!lossCount.count(winner)) {
+                lossCount[winner] = 0;
+            }
+          
+            // Increment the loss count for the loser of the match
+            ++lossCount[loser];
+        }
+
+        vector<vector<int>> answer(2); // To hold the final result
+      
+        // Iterate through the map to classify players based on their loss counts
+        for (auto& playerLossPair : lossCount) {
+            int player = playerLossPair.first;
+            int losses = playerLossPair.second;
+          
+            // If the player has less than 2 losses, add them to the respective list
+            if (losses < 2) {
+                answer[losses].push_back(player);
+            }
+        }
+
+        // Sort the list of winners and one-match-losers
+        sort(answer[0].begin(), answer[0].end());
+        sort(answer[1].begin(), answer[1].end());
+
+        return answer; // Return the sorted lists
+    }
+};
