@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int maxSumAfterPartitioning(vector<int>& arr, int k) {
+        int n = arr.size(); // Get the size of the array
+        vector<int> dp(n + 1, 0); // Create a dynamic programming table initialized with zeros
+
+        // Iterate over the array to fill the dp table
+        for (int i = 1; i <= n; ++i) {
+            int maxElement = 0; // Store the maximum element in the current partition
+          
+            // Try different partition lengths up to 'k'
+            for (int j = i; j > max(0, i - k); --j) {
+                // Update maxElement with the largest value in the current partition
+                maxElement = max(maxElement, arr[j - 1]);
+              
+                // Update the dp table by considering the best partition ending at position 'i'
+                dp[i] = max(dp[i], dp[j - 1] + maxElement * (i - j + 1));
+            }
+        }
+      
+        // Return the maximum sum after partitioning the last element
+        return dp[n];
+    }
+};
