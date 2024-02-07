@@ -1,0 +1,28 @@
+class Solution {
+public:
+    string frequencySort(string s) {
+         unordered_map<char, int> frequencyMap;
+        // Calculate the frequency of each character in the string
+        for (char ch : s) {
+            ++frequencyMap[ch];
+        }
+        // Create a vector to store unique characters
+        vector<char> uniqueChars;
+        // Populate the vector with the keys from the frequencyMap
+        for (auto& keyValue : frequencyMap) {
+            uniqueChars.push_back(keyValue.first);
+        }
+        // Sort the unique characters based on their frequency
+        sort(uniqueChars.begin(), uniqueChars.end(), [&](char a, char b) {
+            return frequencyMap[a] > frequencyMap[b];
+        });
+        // Create a result string to store the sorted characters by frequency
+        string result;
+        // Go through each character and append it to the result string, multiplied by its frequency
+        for (char ch : uniqueChars) {
+            result += string(frequencyMap[ch], ch);
+        }
+        // Return the result string
+        return result;
+    }
+};
