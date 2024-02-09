@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<int> largestDivisibleSubset(vector<int>& nums) {
+         if(nums.empty()) {
+            return {};  // Return an empty vector for an empty input
+        }
+
+        std::vector<int> ans(nums.size(), 1);  // Initialize ans with 1 for each element
+
+        // Sort the input vector to make the solution efficient
+        std::sort(nums.begin(), nums.end());
+
+        for (int i = 1; i < nums.size(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] % nums[j] == 0 && ans[i] < ans[j] + 1) {
+                    ans[i] = ans[j] + 1;
+                }
+            }
+        }
+
+        // Find the index of the maximum element in ans
+        auto maxIndex = std::max_element(ans.begin(), ans.end()) - ans.begin();
+
+        // Reconstruct the largest divisible subset
+        std::vector<int> result;
+        int currentNum = nums[maxIndex];
+        int currentSize = ans[maxIndex];
+        for (int i = maxIndex; i >= 0; i--) {
+            if (currentNum % nums[i] == 0 && ans[i] == currentSize) {
+                result.push_back(nums[i]);
+                currentNum = nums[i];
+                currentSize--;
+            }
+        }
+        return result;
+    }
+};
