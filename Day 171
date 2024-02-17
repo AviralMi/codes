@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
+         int doori = heights.size();
+        for (int i = 0; i < doori - 1; ++i) {
+            if (heights[i] >= heights[i + 1]) {
+                // No need to use bricks or ladders if the current building is not taller than the next one.
+                continue;
+            }
+
+            int diff = heights[i + 1] - heights[i];
+
+            if (diff <= bricks) {
+                bricks -= diff;
+            } else if (ladders > 0) {
+                ladders -= 1;
+            } else {
+                // If both bricks and ladders are insufficient, return the current index.
+                return i;
+            }
+        }
+
+        // If all buildings can be reached with available bricks and ladders, return the last index.
+        return doori - 1;
+    }
+};
