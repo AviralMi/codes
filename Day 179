@@ -1,0 +1,41 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int findBottomLeftValue(TreeNode* root) {
+        std::queue<TreeNode*> queue{{root}};
+      
+        // Variable to store the leftmost value as we traverse
+        int bottomLeftValue = 0;
+      
+        // Loop until the queue is empty
+        while (!queue.empty()) {
+            // Get the value of the current front node as it could be the leftmost node of this level
+            bottomLeftValue = queue.front()->val;
+          
+            // Iterate over all the nodes at the current level
+            for (int i = static_cast<int>(queue.size()); i > 0; --i) {
+                TreeNode* currentNode = queue.front();
+                queue.pop();
+              
+                // If the left child exists, add it to the queue for the next level
+                if (currentNode->left) queue.push(currentNode->left);
+                // If the right child exists, add it to the queue for the next level
+                if (currentNode->right) queue.push(currentNode->right);
+            }
+        }
+      
+        // After traversing the whole tree, bottomLeftValue will contain the leftmost value of the bottom level
+        return bottomLeftValue;
+    }
+    }
+};
