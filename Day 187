@@ -1,0 +1,22 @@
+class Solution {
+public:
+    string customSortString(string order, string s) {
+        int count[26]={0};
+        string ans = "";
+
+        for(auto x:s)
+            count[x-'a']++;
+        
+        for(auto x:order){
+            while(count[x-'a']--){
+                ans.push_back(x);
+            }
+        }
+        for(auto x:s){
+            if(count[x-'a']>0){
+                ans.push_back(x);
+            }
+        }
+        return ans;
+    }
+};
