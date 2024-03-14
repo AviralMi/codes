@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+       int startIndexForStrictlyGreater = 0; // Start index for subarrays with sum strictly greater than goal
+        int startIndexForAtLeastGoal = 0; // Start index for subarrays with sum at least as much as goal
+        int sumForStrictlyGreater = 0; // Current sum for the subarrays which is strictly greater than goal
+        int sumForAtLeastGoal = 0; // Current sum for the subarrays which is at least as much as goal
+        int endIndex = 0; // Current end index of the subarray
+        int countSubarrays = 0; // Count of subarrays with sum exactly equals to goal
+        int numSize = nums.size(); // Size of the input array
+      
+        // Iterate over each element in nums to find subarrays with sum equal to goal
+        while (endIndex < numSize) {
+            sumForStrictlyGreater += nums[endIndex]; // Increment sum by current element for strictly greater sum
+            sumForAtLeastGoal += nums[endIndex]; // Increment sum by current element for at least goal sum
+          
+            // Move startIndexForStrictlyGreater till the sum is strictly greater than the goal
+            while (startIndexForStrictlyGreater <= endIndex && sumForStrictlyGreater > goal) {
+                sumForStrictlyGreater -= nums[startIndexForStrictlyGreater++];
+            }
+          
+            // Move startIndexForAtLeastGoal till the sum is at least as much as the goal
+            while (startIndexForAtLeastGoal <= endIndex && sumForAtLeastGoal >= goal) {
+                sumForAtLeastGoal -= nums[startIndexForAtLeastGoal++];
+            }
+          
+            // The number of subarrays which sum up to the goal equals to the difference of indices
+            // This gives us the count of all the subarrays between the two starts
+            countSubarrays += startIndexForAtLeastGoal - startIndexForStrictlyGreater;
+          
+            // Move to the next element
+            ++endIndex;
+        }
+        return countSubarrays; // Return the total count of subarrays with sum equal to goal
+    }
+};
