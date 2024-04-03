@@ -1,0 +1,49 @@
+class Solution {
+public:
+    bool exist(vector<vector<char>>& board, string word) {
+       int rowCount = board.size();          // Number of rows in the board
+        int colCount = board[0].size();      // Number of columns in the board
+        // Directions for exploring adjacent cells (up, right, down, left)
+        int directions[5] = {-1, 0, 1, 0, -1};
+
+        // Recursive lambda function for performing DFS
+        function<bool(int, int, int)> dfs = [&](int row, int col, int wordIndex) -> bool {
+            if (wordIndex == word.size() - 1) {
+                // If we are at the last character, check if it matches
+                return board[row][col] == word[wordIndex];
+            }
+            if (board[row][col] != word[wordIndex]) {
+                // If the current character does not match, return false
+                return false;
+            }
+            char tempChar = board[row][col];   // Temporarily store the current character
+            board[row][col] = '0';             // Mark the cell as visited by placing a '0'
+
+            // Explore the adjacent cells in all four directions
+            for (int dir = 0; dir < 4; ++dir) {
+                int newRow = row + directions[dir], newCol = col + directions[dir + 1];
+                // Check if the new position is within the board and not visited
+                if (newRow >= 0 && newRow < rowCount && 
+                    newCol >= 0 && newCol < colCount && 
+                    board[newRow][newCol] != '0' && 
+                    dfs(newRow, newCol, wordIndex + 1)) {
+                        return true;    // If able to complete the word from this position, return true
+                }
+            }
+
+            board[row][col] = tempChar;       // Reset the cell back to its original character
+            return false;                      // If unable to complete the word, return false
+        };
+
+        // Iterate over each cell in the 2D board
+        for (int i = 0; i < rowCount; ++i) {
+            for (int j = 0; j < colCount; ++j) {
+                // Start DFS from this cell if it matches the first character of the word
+                if (dfs(i, j, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false; // Return false if the word is not found
+    }
+};
