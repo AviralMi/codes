@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int countStudents(vector<int>& students, vector<int>& sandwiches) {
+        int count[2] = {0};
+      
+        // Count the number of students preferring each type of sandwich (0 or 1)
+        for (int student : students) {
+            count[student]++;
+        }
+      
+        // Iterate through the sandwiches queue
+        for (int sandwich : sandwiches) {
+            // If no students prefer the current type of sandwich, break and return the count of the other type
+            if (count[sandwich] == 0) {
+                return count[1 - sandwich]; // use 1 - sandwich to get the opposite type
+            }
+            // Otherwise, decrement the count of students who prefer the current type of sandwich
+            count[sandwich]--;
+        }
+      
+        // If all sandwiches can be taken by students, return 0
+        return 0;
+    }
+};
