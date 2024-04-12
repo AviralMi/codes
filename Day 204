@@ -1,0 +1,33 @@
+class Solution {
+public:
+    string removeKdigits(string num, int k) {
+      string stack; // Using 'stack' to store the characters representing the smallest number
+
+        // Iterate through each character in the input number
+        for (char& digit : num) {
+            // Check if the current digit is smaller than the last digit in 'stack'
+            // and whether we have still digits to remove
+            while (k > 0 && !stack.empty() && stack.back() > digit) {
+                stack.pop_back(); // Remove the last digit from 'stack' to maintain the smallest number
+                --k; // Decrement the count of digits to remove
+            }
+            stack += digit; // Add the current digit to 'stack'
+        }
+
+        // Further remove digits from the end if we haven't removed enough 'k' digits
+        // This is necessary when the sequence was initially increasing
+        while (k > 0) {
+            stack.pop_back(); // Remove the last digit from 'stack'
+            --k; // Decrement the count of digits to remove
+        }
+
+        // Remove leading zeros from the 'stack'
+        int startIndex = 0; // Index to keep track of leading zeros
+        while (startIndex < stack.size() && stack[startIndex] == '0') {
+            ++startIndex; // Increment index to skip the leading zero
+        }
+      
+        string result = stack.substr(startIndex); // Extract the non-zero starting substring as result
+        return result.empty() ? "0" : result; // If result is empty, return "0"; otherwise, return the result
+    }
+};
