@@ -1,0 +1,28 @@
+class Solution {
+public:
+    long long wonderfulSubstrings(string word) {
+        int count[1024] = {1}; // Initialize with 1 at index 0 to handle the empty substring scenario
+        long long totalSubstrings = 0; // Total count of wonderful substrings
+        int state = 0; // Current state of bit mask representing character frequency parity
+      
+        // Iterate over each character in the string
+        for (char ch : word) {
+            // Update the state: Flip the bit corresponding to the current character
+            state ^= 1 << (ch - 'a');
+          
+            // Add the count of the current state to the total substrings count
+            totalSubstrings += count[state];
+          
+            // Check for states that differ by exactly one bit from the current state
+            for (int i = 0; i < 10; ++i) {
+                totalSubstrings += count[state ^ (1 << i)];
+            }
+          
+            // Increment the count for the current state
+            ++count[state];
+        }
+      
+        // Return the total count of wonderful substrings
+        return totalSubstrings;
+    }
+};
